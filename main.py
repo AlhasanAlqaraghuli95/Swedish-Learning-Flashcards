@@ -1,6 +1,7 @@
 import tkinter as tk
 import pandas as pd
 import random
+from pathlib import Path
 
 BACKGROUND_COLOR = "#B1DDC6"
 
@@ -17,8 +18,8 @@ TIME = 3000
 
 
 # ---------------------------- DATA IMPORT ------------------------------- #
-
-vocabulary = pd.read_csv('.\\data\\1000 most common sv words.csv')
+vocabulary_file_path = Path('data') / '1000 most common sv words.csv'
+vocabulary = pd.read_csv(vocabulary_file_path)
 
 # converting the data into a dictionary
 vocab_dict = vocabulary.to_dict(orient = 'records') 
@@ -27,7 +28,7 @@ vocab_dict = vocabulary.to_dict(orient = 'records')
 displayed_words = []
 
 # store correctly guessed words into a list
-file_guessed = 'data/correctly_guessed.csv' # the file path
+file_guessed = Path('data') / 'correctly_guessed.csv' # the file path
 
 try:
     loaded_guessed_words = pd.read_csv(file_guessed) # load the file into a dataframe (Read)
@@ -158,8 +159,11 @@ window.config(padx=50, pady=50, bg=BACKGROUND_COLOR)
 canvas = tk.Canvas(width = 800, height = 530, bg = BACKGROUND_COLOR, highlightthickness = 0)
 canvas.grid(column = 0, row = 0, columnspan=2)
 
-card_front_image = tk.PhotoImage(file = ".\\images\\card_front.png")
-card_back_image = tk.PhotoImage(file = ".\\images\\card_back.png")
+card_front_image_file_path = Path('images') / 'card_front.png'
+card_front_image = tk.PhotoImage(file = card_front_image_file_path)
+
+card_back_image_file_path = Path('images') / 'card_back.png'
+card_back_image = card_back_image_file_path
 
 # The tuple for create image specifies the x and y coordinates of the center of the image.
 # setting it to half the canvas size will center the image
@@ -172,8 +176,11 @@ word_text = canvas.create_text(400, 265, text = "Ord", font = (FONT, WORD_SIZE, 
 
 
 # Buttons
-correct_img = tk.PhotoImage(file = ".\\images\\right.png")
-false_img = tk.PhotoImage(file = ".\\images\\wrong.png")
+correct_img_file_path = Path('images') / 'right.png'
+correct_img = tk.PhotoImage(file = correct_img_file_path)
+
+false_img_file_path = Path('images') / 'wrong.png'
+false_img = tk.PhotoImage(file = false_img_file_path)
 
 correct_button = tk.Button(image = correct_img, highlightthickness=0, borderwidth=0, command = correct_guess)
 correct_button.grid(column=1, row=1)
